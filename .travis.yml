@@ -7,27 +7,27 @@ android:
     - platform-tools
     - tools
     - build-tools-24.0.3
-    - android-24
+    - android-21
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-24
+    - sys-img-armeabi-v7a-android-21
   licenses:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
-  notifications:
-   email: false
+notifications:
+ email: false
  
-  env:
-   global:
+env:
+ global:
     - ADB_INSTALL_TIMEOUT=8
   
-  before_script:
+before_script:
     - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
     - emulator -avd test -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &	
 
-  script:
+script:
     - android list target
     - ./gradlew connectedAndroidTest
