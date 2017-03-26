@@ -15,14 +15,14 @@ public interface IFoodManager {
     public boolean addFood(String name, Map<NutritientType, Integer> nutritients);
     public boolean removeFood(String name);
 
-    public void setNutritients(String name, int cal, int carbs, int fib, int fat, int protein);
-    public void setCategory(List<String> food, String category);
-    public void setCategory(String name, String category);
+    public void setNutritients(String name, Map<NutritientType, Integer> nutritients);
+    public void setCategory(List<String> food, Categories category);
+    public void setCategory(String name, Categories category);
     public void setName(String oldName, String newName);
 
-    public Map<String,Map<String, Integer>> getAllFood();
-    public Map<String, Map<String, Integer>> getFoodByCategory(String category);
+    public Map<String, Map<NutritientType, Integer>> getAllFood();
+    public Map<String, Map<NutritientType, Integer>> getFoodByCategory(Categories category);
 
     public Map<String, Integer> getNutritients(String food);
-    public String getCategory(String food);
+    public Categories getCategory(String food);
 }

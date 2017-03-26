@@ -18,7 +18,9 @@ public class FoodManager implements IFoodManager {
     private Map<String, Categories> categorizedFoods;
 
     public FoodManager(){
+
         foodItems = new HashMap<String, Map<NutritientType, Integer>>();
+        categorizedFoods = new HashMap<String, Categories>();
     }
 
     public FoodManager(Map<String, Map<NutritientType, Integer>> foods){
@@ -76,18 +78,30 @@ public class FoodManager implements IFoodManager {
     }
 
     @Override
-    public void setNutritients(String name, int cal, int carbs, int fib, int fat, int protein) {
+    public void setNutritients(String name, Map<NutritientType, Integer> nutritients) {
 
     }
 
     @Override
-    public void setCategory(List<String> food, String category) {
-
+    public void setCategory(List<String> food, Categories category) {
+        for(String name : food){
+            setCategory(name, category);
+        }
     }
 
     @Override
-    public void setCategory(String name, String category) {
+    public void setCategory(String name, Categories category) {
+        if(name.isEmpty()){
+           throw new IllegalArgumentException("Names cannot be empty");
+        }
+        if(category == null){
+            throw new NullPointerException("Category cannot be null");
+        }
+        if(name == null){
+            throw new NullPointerException("Name cannot be null");
+        }
 
+        categorizedFoods.put(name, category);
     }
 
     @Override
@@ -95,15 +109,23 @@ public class FoodManager implements IFoodManager {
 
     }
 
-
     @Override
-    public Map<String, Map<String, Integer>> getAllFood() {
-        return null;
+    public Map<String, Map<NutritientType, Integer>> getAllFood() {
+        return foodItems;
     }
 
     @Override
-    public Map<String, Map<String, Integer>> getFoodByCategory(String category) {
-        return null;
+    public Map<String, Map<NutritientType, Integer>> getFoodByCategory(Categories category) {
+
+        Map<String, Map<NutritientType, Integer>> foodByCat = new HashMap<String, Map<NutritientType, Integer>>();
+
+        for(Map.Entry<String, Categories> current : categorizedFoods.entrySet()){
+            if(current.getValue().equals(category)){
+                foodByCat.put(current.getKey(), foodItems.get(current.getKey()));
+            }
+        }
+
+        return foodByCat;
     }
 
     @Override
@@ -112,8 +134,8 @@ public class FoodManager implements IFoodManager {
     }
 
     @Override
-    public String getCategory(String food) {
-        return null;
+    public Categories getCategory(String food) {
+        return categorizedFoods.get(food);
     }
 
 }

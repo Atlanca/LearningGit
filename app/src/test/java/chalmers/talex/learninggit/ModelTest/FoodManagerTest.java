@@ -65,13 +65,13 @@ public class FoodManagerTest {
         name.add("Chicken Breast");
         name.add("Chiken Leg");
 
+        foodmanager.addFood(name.get(0), new HashMap<NutritientType, Integer>(), Categories.BEEF);
         foodmanager.addFood(name.get(1), new HashMap<NutritientType, Integer>(), Categories.CHICKEN);
         foodmanager.addFood(name.get(2), new HashMap<NutritientType, Integer>(), Categories.FISH);
-        foodmanager.addFood(name.get(0), new HashMap<NutritientType, Integer>(), Categories.BEEF);
 
-        foodmanager.setCategory(name, "Chicken");
+        foodmanager.setCategory(name, Categories.CHICKEN);
 
-        Map<String, Map<String, Integer>> chickenFood = foodmanager.getFoodByCategory("Chicken");
+        Map<String, Map<NutritientType, Integer>> chickenFood = foodmanager.getFoodByCategory(Categories.CHICKEN);
         for(String current : name){
             assertTrue(chickenFood.containsKey(current));
         }
