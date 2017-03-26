@@ -9,11 +9,14 @@ authors:
 - Alessandro Flaborea
 - Debora Scappin
 ---
-Platform: 'Android 21 and up'  
-Programming languages: 'Java, SQL/Json, XML'
----
 
 # Project Proposal
+
+Platform: Android 21 and up  
+Programming languages: Java, SQL/Json, XML  
+  
+This is the project proposal for Cards against Humanity app. It describes what the application is, which programming languages
+abd platforms will be used and a few possible features that can enhance the Cards against humanity experience.  
 
 ## What is Cards Against Humanity
 This card game is an already invented and well known game. The general game idea is that there’s a deck of cards and several different players. One of the players (aka the King) is given a card (a black card) containing a sentence that is incomplete. The other players are given a set of other cards (white cards) containing solitary words that supplement the card with the incomplete sentence. The goal is to create the most funny sentence possible. Furthermore, during the playing session one person is assigned the role as the king. The player that is the king decides which player laid the funniest card of the round. Hence the king decides the winner of that specific round. Next round another player is assigned the role as the king. The game ends when the settings (specified by the host) for the table is met. The player with the highest score when the game ends is the winner.
