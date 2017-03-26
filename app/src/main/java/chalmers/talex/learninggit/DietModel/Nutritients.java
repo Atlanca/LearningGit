@@ -5,6 +5,15 @@ package chalmers.talex.learninggit.DietModel;
  */
 
 class Nutritients{
+
+    protected Nutritients(){
+
+    }
+
+    protected Nutritients(int cal, int carbs, int fibs, int prot, int fat){
+
+    }
+
     protected int getCalories() {
         return 0;
     }

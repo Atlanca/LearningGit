@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import chalmers.talex.learninggit.DietModel.Categories;
+import chalmers.talex.learninggit.DietModel.NutritientType;
 
 /**
  * Created by SAMSUNG on 2017-03-25.
  */
 
 public interface IFoodManager {
-    public boolean addFood(String name, int cal, int carbs, int fib, int fat, int protein, String category);
-    public boolean addFood(String name, int cal, int carbs, int fib, int fat, int protein);
+    public boolean addFood(String name, Map<NutritientType, Integer> nutritients, Categories category);
+    public boolean addFood(String name, Map<NutritientType, Integer> nutritients);
     public boolean removeFood(String name);
 
     public void setNutritients(String name, int cal, int carbs, int fib, int fat, int protein);
