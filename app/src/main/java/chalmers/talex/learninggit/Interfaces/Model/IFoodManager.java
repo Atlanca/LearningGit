@@ -23,6 +23,6 @@ public interface IFoodManager {
     public Map<String, Map<NutritientType, Integer>> getAllFood();
     public Map<String, Map<NutritientType, Integer>> getFoodByCategory(Categories category);
 
-    public Map<String, Integer> getNutritients(String food);
+    public Map<NutritientType, Integer> getNutritients(String food);
     public Categories getCategory(String food);
 }

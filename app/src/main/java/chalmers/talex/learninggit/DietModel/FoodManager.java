@@ -74,12 +74,18 @@ public class FoodManager implements IFoodManager {
 
     @Override
     public boolean removeFood(String name) {
-        return false;
+        checkValidName(name);
+        if(!foodItems.keySet().contains(name)) {
+            throw new IllegalArgumentException("No such food item exists");
+        }
+        foodItems.remove(name);
+        return true;
     }
 
     @Override
     public void setNutritients(String name, Map<NutritientType, Integer> nutritients) {
-
+        foodItems.get(name).clear();
+        foodItems.get(name).putAll(nutritients);
     }
 
     @Override
@@ -89,24 +95,37 @@ public class FoodManager implements IFoodManager {
         }
     }
 
-    @Override
-    public void setCategory(String name, Categories category) {
+    private void checkValidName(String name){
         if(name.isEmpty()){
-           throw new IllegalArgumentException("Names cannot be empty");
-        }
-        if(category == null){
-            throw new NullPointerException("Category cannot be null");
+            throw new IllegalArgumentException("Names cannot be empty");
         }
         if(name == null){
             throw new NullPointerException("Name cannot be null");
         }
+    }
 
+    @Override
+    public void setCategory(String name, Categories category) {
+        checkValidName(name);
+
+        if(!foodItems.containsKey(name)){
+            throw new IllegalArgumentException("No such food exists");
+        }
+        if(category == null) {
+            throw new NullPointerException("Category cannot be null");
+        }
         categorizedFoods.put(name, category);
     }
 
     @Override
     public void setName(String oldName, String newName) {
-
+        checkValidName(oldName);
+        if(foodItems.containsKey(newName)){
+            throw new IllegalArgumentException("A food item with this name already exists");
+        }
+        Map<NutritientType, Integer> nutritient = foodItems.get(oldName);
+        foodItems.remove(oldName);
+        foodItems.put(newName, nutritient);
     }
 
     @Override
@@ -129,8 +148,8 @@ public class FoodManager implements IFoodManager {
     }
 
     @Override
-    public Map<String, Integer> getNutritients(String food) {
-        return null;
+    public Map<NutritientType, Integer> getNutritients(String food) {
+        return foodItems.get(food);
     }
 
     @Override
