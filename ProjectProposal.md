@@ -12,8 +12,8 @@ authors:
 
 # Project Proposal
 
-Platform: Android 21 and up  
-Programming languages: Java, SQL/Json, XML  
+**Platform:** Android 21 and up  
+**Programming languages:** Java, SQL/Json, XML  
   
 This is the project proposal for Cards against Humanity app. It describes what the application is, which programming languages
 abd platforms will be used and a few possible features that can enhance the Cards against humanity experience.  
