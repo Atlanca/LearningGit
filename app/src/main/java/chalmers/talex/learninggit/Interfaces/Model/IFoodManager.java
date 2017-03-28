@@ -1,5 +1,6 @@
 package chalmers.talex.learninggit.Interfaces.Model;
 
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +26,7 @@ public interface IFoodManager {
 
     public Map<NutritientType, Integer> getNutritients(String food);
     public Categories getCategory(String food);
+
+    public void addPropertyChangeListener(PropertyChangeListener pcl);
+    public void removePropertyChangeListener(PropertyChangeListener pcl);
 }

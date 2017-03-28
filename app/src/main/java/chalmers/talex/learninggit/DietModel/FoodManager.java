@@ -1,5 +1,7 @@
 package chalmers.talex.learninggit.DietModel;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IllegalFormatCodePointException;
@@ -16,9 +18,10 @@ public class FoodManager implements IFoodManager {
 
     private Map<String, Map<NutritientType, Integer>> foodItems;
     private Map<String, Categories> categorizedFoods;
+    private PropertyChangeSupport pcs;
 
     public FoodManager(){
-
+        pcs = new PropertyChangeSupport(this);
         foodItems = new HashMap<String, Map<NutritientType, Integer>>();
         categorizedFoods = new HashMap<String, Categories>();
     }
@@ -26,7 +29,6 @@ public class FoodManager implements IFoodManager {
     public FoodManager(Map<String, Map<NutritientType, Integer>> foods){
         this();
         for(Map.Entry<String, Map<NutritientType, Integer>> current : foods.entrySet()) {
-
             if(current.getValue().keySet().contains(NutritientType.values())) {
                 String name = current.getKey();
                 addFood(name, current.getValue(), null);
@@ -68,7 +70,7 @@ public class FoodManager implements IFoodManager {
         }else{
             foodItems.put(name, nutritients);
         }
-
+        pcs.firePropertyChange("updateFood", null, getEntry(name));
         return true;
     }
 
@@ -79,13 +81,33 @@ public class FoodManager implements IFoodManager {
             throw new IllegalArgumentException("No such food item exists");
         }
         foodItems.remove(name);
+        removeCategorization(name);
+        pcs.firePropertyChange("updateFood", getEntry(name), null);
         return true;
+    }
+
+    private void removeCategorization(String name){
+        if(!categorizedFoods.keySet().contains(name)) {
+            throw new NullPointerException("This food item is not categorized");
+        }
+        categorizedFoods.remove(name);
+    }
+
+    private Map.Entry<String, Map<NutritientType,Integer>> getEntry(String key){
+        for(Map.Entry<String, Map<NutritientType,Integer>> current : foodItems.entrySet()) {
+            if (current.getKey().equals(key)) {
+                return current;
+            }
+        }
+        throw new NullPointerException("Entry with given key does not exist");
     }
 
     @Override
     public void setNutritients(String name, Map<NutritientType, Integer> nutritients) {
+        Map<NutritientType,Integer> oldNutritients = foodItems.get(name);
         foodItems.get(name).clear();
         foodItems.get(name).putAll(nutritients);
+        pcs.firePropertyChange("updateNutritients", oldNutritients, foodItems.get(name));
     }
 
     @Override
@@ -114,7 +136,10 @@ public class FoodManager implements IFoodManager {
         if(category == null) {
             throw new NullPointerException("Category cannot be null");
         }
+        Categories oldCategory = categorizedFoods.get(name);
         categorizedFoods.put(name, category);
+
+        pcs.firePropertyChange("updateCategory", oldCategory, categorizedFoods.get(name));
     }
 
     @Override
@@ -126,6 +151,7 @@ public class FoodManager implements IFoodManager {
         Map<NutritientType, Integer> nutritient = foodItems.get(oldName);
         foodItems.remove(oldName);
         foodItems.put(newName, nutritient);
+        pcs.firePropertyChange("updateName","oldName","newName");
     }
 
     @Override
@@ -155,6 +181,16 @@ public class FoodManager implements IFoodManager {
     @Override
     public Categories getCategory(String food) {
         return categorizedFoods.get(food);
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        pcs.addPropertyChangeListener(pcl);
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        pcs.removePropertyChangeListener(pcl);
     }
 
 }
