@@ -63,7 +63,7 @@ public class FoodManagerTest {
         List<String> name = new ArrayList<String>();
         name.add("Chicken Wings");
         name.add("Chicken Breast");
-        name.add("Chiken Leg");
+        name.add("Chicken Leg");
 
         foodmanager.addFood(name.get(0), new HashMap<NutritientType, Integer>(), Categories.BEEF);
         foodmanager.addFood(name.get(1), new HashMap<NutritientType, Integer>(), Categories.CHICKEN);
